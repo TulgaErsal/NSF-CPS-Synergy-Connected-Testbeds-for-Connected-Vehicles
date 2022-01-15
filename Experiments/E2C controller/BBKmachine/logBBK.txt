@@ -1,0 +1,14 @@
+Initializing...
+Winsock2 initialized successfully!
+Socket created successfully!
+Bound to the receive address successfully!
+Created address structure
+Socket made non-blocking successfully!
+Clock resolution is 279.365115 ns.
+Initialization completed.
+
+WARNING: Connection timed out!
+
+Terminating...
+Socket closed.
+Termination completed.

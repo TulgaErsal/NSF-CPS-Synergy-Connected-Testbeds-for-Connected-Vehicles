@@ -1,0 +1,13 @@
+numfunctioncall changed from 4 to 1
+
+should see round trip time at most 4 steps the simulation time. 
+
+
+
+the ping test  should be <1ms
+
+the computer that can be pinged should be able to be server.
+
+
+
+for changing inputs and outputs change longhaul, embed.c, client.c for client.

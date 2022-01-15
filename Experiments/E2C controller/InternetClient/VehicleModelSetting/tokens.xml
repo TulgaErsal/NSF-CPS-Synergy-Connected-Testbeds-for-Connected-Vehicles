@@ -1,0 +1,2487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tokens>
+	<token name="MODEL_NAME"><![CDATA[VESIM orig]]></token>
+	<token name="20SIM_DIR"><![CDATA[C:\Program Files (x86)\20-sim 4.6]]></token>
+	<token name="SUBMODEL_NAME"><![CDATA[ShiftLogic]]></token>
+	<token name="ALGLOOP_NAMES"><![CDATA[	NULL]]></token>
+	<token name="ALGLOOP_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="ALGLOOP_NAMES3"><![CDATA[]]></token>
+	<token name="ALGLOOP_UNITS"><![CDATA[]]></token>
+	<token name="ALIAS_EQUATIONS"><![CDATA[]]></token>
+	<token name="ALIAS_MATRIX_NAMES"><![CDATA[	NULL
+]]></token>
+	<token name="ALIAS_MATRIX_NAMES2"><![CDATA[	NULL
+]]></token>
+	<token name="ALIAS_MATRIX_NAMES3"><![CDATA[
+]]></token>
+	<token name="ALIAS_MATRIX_UNITS"><![CDATA[]]></token>
+	<token name="ALIAS_VARIABLE_INDICES"><![CDATA[	-1]]></token>
+	<token name="ALIAS_VARIABLE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="ALIAS_VARIABLE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="ALIAS_VARIABLE_NAMES3"><![CDATA[]]></token>
+	<token name="ALIAS_VARIABLE_UNITS"><![CDATA[]]></token>
+	<token name="COMPANY_NAME"><![CDATA[20-sim 4.6 Student License]]></token>
+	<token name="CONSTANT_NAMES"><![CDATA[	NULL]]></token>
+	<token name="CONSTANT_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="CONSTANT_NAMES3"><![CDATA[]]></token>
+	<token name="CONSTANT_UNITS"><![CDATA[]]></token>
+	<token name="CONSTANT_VALUES"><![CDATA[]]></token>
+	<token name="CONSTRAINT_NAMES"><![CDATA[	NULL]]></token>
+	<token name="CONSTRAINT_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="CONSTRAINT_NAMES3"><![CDATA[]]></token>
+	<token name="CONSTRAINT_UNITS"><![CDATA[]]></token>
+	<token name="DEPRATE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="DEPRATE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="DEPRATE_NAMES3"><![CDATA[]]></token>
+	<token name="DEPRATE_UNITS"><![CDATA[]]></token>
+	<token name="DEPSTATE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="DEPSTATE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="DEPSTATE_NAMES3"><![CDATA[]]></token>
+	<token name="DEPSTATE_UNITS"><![CDATA[]]></token>
+	<token name="DIRECT_FEEDTHROUGH"><![CDATA[XXFALSE]]></token>
+	<token name="DYNAMIC_EQUATIONS"><![CDATA[	/* ws12 = w12 + dw12 * throt; */
+	xx_V[13] = xx_P[9] + xx_P[15] * xx_V[3];
+
+	/* ws21 = w21 + dw21 * throt; */
+	xx_V[14] = xx_P[10] + xx_P[16] * xx_V[3];
+
+	/* ws23 = w23 + dw23 * throt; */
+	xx_V[15] = xx_P[11] + xx_P[17] * xx_V[3];
+
+	/* ws32 = w32 + dw32 * throt; */
+	xx_V[16] = xx_P[12] + xx_P[18] * xx_V[3];
+
+	/* ws34 = w34 + dw34 * throt; */
+	xx_V[17] = xx_P[13] + xx_P[19] * xx_V[3];
+
+	/* ws43 = w43 + dw43 * throt; */
+	xx_V[18] = xx_P[14] + xx_P[20] * xx_V[3];
+
+	/* if g_out == 1 */
+	if (xx_V[2] == 1.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws12 */
+			if (xx_V[4] <= xx_V[13])
+			{
+				/* ng = gr1; */
+				xx_V[0] = xx_P[1];
+
+				/* nt = gr1 * eff1; */
+				xx_V[1] = xx_P[1] * xx_P[21];
+
+				/* g_out = 1; */
+				xx_V[2] = 1.0;
+			}
+			else
+			{
+				/* if w_trans > ws12 */
+				if (xx_V[4] > xx_V[13])
+				{
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+
+					/* f = 1; */
+					xx_V[12] = 1.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb12 = time + dur; */
+					xx_V[6] = xx_time + xx_P[0];
+
+					/* int1 = tbt1 * (dur) + ts; */
+					xx_V[19] = xx_P[5] * (xx_P[0]) + xx_V[5];
+
+					/* int2 = tbt2 * (dur) + ts; */
+					xx_V[20] = xx_P[6] * (xx_P[0]) + xx_V[5];
+
+					/* ng = gr1; */
+					xx_V[0] = xx_P[1];
+
+					/* nt = gr1 * eff1; */
+					xx_V[1] = xx_P[1] * xx_P[21];
+				}
+			}
+		}
+		else
+		{
+			/* if f == 2 */
+			if (xx_V[12] == 2.0)
+			{
+				/* if time <= tb21 */
+				if (xx_time <= xx_V[7])
+				{
+					/* ng = gr2 + ((gr1 - gr2) / dur) * (time - ts); */
+					xx_V[0] = xx_P[2] + ((xx_P[1] - xx_P[2]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* nt = gr2 * eff2 + ((gr1 * eff1 - gr2 * eff2) / dur) * (time - ts); */
+					xx_V[1] = xx_P[2] * xx_P[22] + ((xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* g_out = 1; */
+					xx_V[2] = 1.0;
+				}
+				else
+				{
+					/* if time > tb21 */
+					if (xx_time > xx_V[7])
+					{
+						/* ng = gr1; */
+						xx_V[0] = xx_P[1];
+
+						/* nt = gr1 * eff1; */
+						xx_V[1] = xx_P[1] * xx_P[21];
+
+						/* g_out = 1; */
+						xx_V[2] = 1.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		/* if g_out == 2 */
+		if (xx_V[2] == 2.0)
+		{
+			/* if f == 0 */
+			if (xx_V[12] == 0.0)
+			{
+				/* if w_trans <= ws21 */
+				if (xx_V[4] <= xx_V[14])
+				{
+					/* g_out = 1; */
+					xx_V[2] = 1.0;
+
+					/* f = 2; */
+					xx_V[12] = 2.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb21 = time + dur; */
+					xx_V[7] = xx_time + xx_P[0];
+
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+				}
+
+				/* if w_trans > ws21 and w_trans <= ws23 */
+				if (xx_V[4] > xx_V[14] && xx_V[4] <= xx_V[15])
+				{
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+				}
+
+				/* if w_trans > ws23 */
+				if (xx_V[4] > xx_V[15])
+				{
+					/* g_out = 3; */
+					xx_V[2] = 3.0;
+
+					/* f = 1; */
+					xx_V[12] = 1.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb23 = time + dur; */
+					xx_V[8] = xx_time + xx_P[0];
+
+					/* int1 = tbt1 * dur + ts; */
+					xx_V[19] = xx_P[5] * xx_P[0] + xx_V[5];
+
+					/* int2 = tbt2 * dur + ts; */
+					xx_V[20] = xx_P[6] * xx_P[0] + xx_V[5];
+
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+				}
+			}
+			else
+			{
+				/* if f == 1 */
+				if (xx_V[12] == 1.0)
+				{
+					/* if time <= tb12 */
+					if (xx_time <= xx_V[6])
+					{
+						/* y1 = tby1 * (gr1 * eff1 - gr2 * eff2) + gr2 * eff2; */
+						xx_V[21] = xx_P[7] * (xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) + xx_P[2] * xx_P[22];
+
+						/* y2 = tby2 * (gr1 * eff1 - gr2 * eff2) + gr2 * eff2; */
+						xx_V[22] = xx_P[8] * (xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) + xx_P[2] * xx_P[22];
+
+						/* m1 = (y1 - gr1 * eff1) / (tbt1 * dur); */
+						xx_V[23] = (xx_V[21] - xx_P[1] * xx_P[21]) / (xx_P[5] * xx_P[0]);
+
+						/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+						xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+						/* m3 = (gr2 * eff2 - y2) / ((1 - tbt2) * dur); */
+						xx_V[25] = (xx_P[2] * xx_P[22] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+						/* ng = gr1 - ((gr1 - gr2) / dur) * (time - ts); */
+						xx_V[0] = xx_P[1] - ((xx_P[1] - xx_P[2]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+						/* if (time - ts) <= (tbt1 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+						{
+							/* nt = gr1 * eff1 + m1 * (time - ts); */
+							xx_V[1] = xx_P[1] * xx_P[21] + xx_V[23] * (xx_time - xx_V[5]);
+						}
+						else
+						{
+							/* if (time - ts) <= (tbt2 * dur) */
+							if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+							{
+								/* nt = y1 + m2 * (time - int1); */
+								xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+							}
+							else
+							{
+								/* nt = y2 + m3 * (time - int2); */
+								xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+							}
+						}
+					}
+					else
+					{
+						/* if time > tb12 */
+						if (xx_time > xx_V[6])
+						{
+							/* ng = gr2; */
+							xx_V[0] = xx_P[2];
+
+							/* nt = gr2 * eff2; */
+							xx_V[1] = xx_P[2] * xx_P[22];
+
+							/* g_out = 2; */
+							xx_V[2] = 2.0;
+
+							/* f = 0; */
+							xx_V[12] = 0.0;
+						}
+					}
+				}
+			}
+
+			/* if f == 2 and g_out == 2 */
+			if (xx_V[12] == 2.0 && xx_V[2] == 2.0)
+			{
+				/* if time <= tb32 */
+				if (xx_time <= xx_V[9])
+				{
+					/* ng = gr3 + ((gr2 - gr3) / dur) * (time - ts); */
+					xx_V[0] = xx_P[3] + ((xx_P[2] - xx_P[3]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* nt = gr3 * eff3 + ((gr2 * eff2 - gr3 * eff3) / dur) * (time - ts); */
+					xx_V[1] = xx_P[3] * xx_P[23] + ((xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+				}
+				else
+				{
+					/* if time > tb32 */
+					if (xx_time > xx_V[9])
+					{
+						/* ng = gr2; */
+						xx_V[0] = xx_P[2];
+
+						/* nt = gr2 * eff2; */
+						xx_V[1] = xx_P[2] * xx_P[22];
+
+						/* g_out = 2; */
+						xx_V[2] = 2.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+
+	/* if g_out == 3 */
+	if (xx_V[2] == 3.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws32 */
+			if (xx_V[4] <= xx_V[16])
+			{
+				/* g_out = 2; */
+				xx_V[2] = 2.0;
+
+				/* f = 2; */
+				xx_V[12] = 2.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb32 = time + dur; */
+				xx_V[9] = xx_time + xx_P[0];
+
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+			}
+
+			/* if w_trans > ws32 and w_trans <= ws34 */
+			if (xx_V[4] > xx_V[16] && xx_V[4] <= xx_V[17])
+			{
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+			}
+
+			/* if w_trans > ws34 */
+			if (xx_V[4] > xx_V[17])
+			{
+				/* g_out = 4; */
+				xx_V[2] = 4.0;
+
+				/* f = 1; */
+				xx_V[12] = 1.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb34 = time + dur; */
+				xx_V[10] = xx_time + xx_P[0];
+
+				/* int1 = tbt1 * dur + ts; */
+				xx_V[19] = xx_P[5] * xx_P[0] + xx_V[5];
+
+				/* int2 = tbt2 * dur + ts; */
+				xx_V[20] = xx_P[6] * xx_P[0] + xx_V[5];
+
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+			}
+		}
+		else
+		{
+			/* if f == 1 */
+			if (xx_V[12] == 1.0)
+			{
+				/* if time <= tb23 */
+				if (xx_time <= xx_V[8])
+				{
+					/* y1 = tby1 * (gr2 * eff2 - gr3 * eff3) + gr3 * eff3; */
+					xx_V[21] = xx_P[7] * (xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) + xx_P[3] * xx_P[23];
+
+					/* y2 = tby2 * (gr2 * eff2 - gr3 * eff3) + gr3 * eff3; */
+					xx_V[22] = xx_P[8] * (xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) + xx_P[3] * xx_P[23];
+
+					/* m1 = (y1 - gr2 * eff2) / (tbt1 * dur); */
+					xx_V[23] = (xx_V[21] - xx_P[2] * xx_P[22]) / (xx_P[5] * xx_P[0]);
+
+					/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+					xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+					/* m3 = (gr3 * eff3 - y2) / ((1 - tbt2) * dur); */
+					xx_V[25] = (xx_P[3] * xx_P[23] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+					/* ng = gr2 - ((gr2 - gr3) / dur) * (time - ts); */
+					xx_V[0] = xx_P[2] - ((xx_P[2] - xx_P[3]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* if (time - ts) <= (tbt1 * dur) */
+					if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+					{
+						/* nt = gr2 * eff2 + m1 * (time - ts); */
+						xx_V[1] = xx_P[2] * xx_P[22] + xx_V[23] * (xx_time - xx_V[5]);
+					}
+					else
+					{
+						/* if (time - ts) <= (tbt2 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+						{
+							/* nt = y1 + m2 * (time - int1); */
+							xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+						}
+						else
+						{
+							/* nt = y2 + m3 * (time - int2); */
+							xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+						}
+					}
+				}
+				else
+				{
+					/* if time > tb23 */
+					if (xx_time > xx_V[8])
+					{
+						/* ng = gr3; */
+						xx_V[0] = xx_P[3];
+
+						/* nt = gr3 * eff3; */
+						xx_V[1] = xx_P[3] * xx_P[23];
+
+						/* g_out = 3; */
+						xx_V[2] = 3.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+
+		/* if f == 2 and g_out == 3 */
+		if (xx_V[12] == 2.0 && xx_V[2] == 3.0)
+		{
+			/* if time <= tb43 */
+			if (xx_time <= xx_V[11])
+			{
+				/* ng = gr4 + ((gr3 - gr4) / dur) * (time - ts); */
+				xx_V[0] = xx_P[4] + ((xx_P[3] - xx_P[4]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+				/* nt = gr4 * eff4 + ((gr3 * eff3 - gr4 * eff4) / dur) * (time - ts); */
+				xx_V[1] = xx_P[4] * xx_P[24] + ((xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+			}
+			else
+			{
+				/* if time > tb43 */
+				if (xx_time > xx_V[11])
+				{
+					/* ng = gr3; */
+					xx_V[0] = xx_P[3];
+
+					/* nt = gr3 * eff3; */
+					xx_V[1] = xx_P[3] * xx_P[23];
+
+					/* g_out = 3; */
+					xx_V[2] = 3.0;
+
+					/* f = 0; */
+					xx_V[12] = 0.0;
+				}
+			}
+		}
+	}
+
+	/* if g_out == 4 */
+	if (xx_V[2] == 4.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws43 */
+			if (xx_V[4] <= xx_V[18])
+			{
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+
+				/* f = 2; */
+				xx_V[12] = 2.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb43 = time + dur; */
+				xx_V[11] = xx_time + xx_P[0];
+
+				/* ng = gr4; */
+				xx_V[0] = xx_P[4];
+
+				/* nt = gr4 * eff4; */
+				xx_V[1] = xx_P[4] * xx_P[24];
+			}
+
+			/* if w_trans > ws43 */
+			if (xx_V[4] > xx_V[18])
+			{
+				/* ng = gr4; */
+				xx_V[0] = xx_P[4];
+
+				/* nt = gr4 * eff4; */
+				xx_V[1] = xx_P[4] * xx_P[24];
+
+				/* g_out = 4; */
+				xx_V[2] = 4.0;
+			}
+		}
+		else
+		{
+			/* if f == 1 */
+			if (xx_V[12] == 1.0)
+			{
+				/* if time <= tb34 */
+				if (xx_time <= xx_V[10])
+				{
+					/* ng = gr3 - ((gr3 - gr4) / dur) * (time - ts); */
+					xx_V[0] = xx_P[3] - ((xx_P[3] - xx_P[4]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* y1 = tby1 * (gr3 * eff3 - gr4 * eff4) + gr4 * eff4; */
+					xx_V[21] = xx_P[7] * (xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) + xx_P[4] * xx_P[24];
+
+					/* y2 = tby2 * (gr3 * eff3 - gr4 * eff4) + gr4 * eff4; */
+					xx_V[22] = xx_P[8] * (xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) + xx_P[4] * xx_P[24];
+
+					/* m1 = (y1 - gr3 * eff3) / (tbt1 * dur); */
+					xx_V[23] = (xx_V[21] - xx_P[3] * xx_P[23]) / (xx_P[5] * xx_P[0]);
+
+					/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+					xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+					/* m3 = (gr4 * eff4 - y2) / ((1 - tbt2) * dur); */
+					xx_V[25] = (xx_P[4] * xx_P[24] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+					/* if (time - ts) <= (tbt1 * dur) */
+					if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+					{
+						/* nt = gr3 * eff3 + m1 * (time - ts); */
+						xx_V[1] = xx_P[3] * xx_P[23] + xx_V[23] * (xx_time - xx_V[5]);
+					}
+					else
+					{
+						/* if (time - ts) <= (tbt2 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+						{
+							/* nt = y1 + m2 * (time - int1); */
+							xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+						}
+						else
+						{
+							/* nt = y2 + m3 * (time - int2); */
+							xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+						}
+					}
+				}
+				else
+				{
+					/* if time > tb34 */
+					if (xx_time > xx_V[10])
+					{
+						/* ng = gr4; */
+						xx_V[0] = xx_P[4];
+
+						/* nt = gr4 * eff4; */
+						xx_V[1] = xx_P[4] * xx_P[24];
+
+						/* g_out = 4; */
+						xx_V[2] = 4.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+]]></token>
+	<token name="EXPERIMENT_NAME"><![CDATA[VESIM orig]]></token>
+	<token name="EXPORT_NAMES"><![CDATA[	NULL]]></token>
+	<token name="EXPORT_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="EXPORT_NAMES3"><![CDATA[]]></token>
+	<token name="EXPORT_UNITS"><![CDATA[]]></token>
+	<token name="FAVORITE_PARAMETER_NAMES"><![CDATA[	NULL]]></token>
+	<token name="FAVORITE_PARAMETER_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="FAVORITE_PARAMETER_NAMES3"><![CDATA[]]></token>
+	<token name="FAVORITE_PARAMETER_UNITS"><![CDATA[]]></token>
+	<token name="FAVORITE_PARS_EQUATIONS"><![CDATA[]]></token>
+	<token name="FAVORITE_VARIABLE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="FAVORITE_VARIABLE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="FAVORITE_VARIABLE_NAMES3"><![CDATA[]]></token>
+	<token name="FAVORITE_VARIABLE_UNITS"><![CDATA[]]></token>
+	<token name="FAVORITE_VARS_EQUATIONS"><![CDATA[]]></token>
+	<token name="FILE_NAME"><![CDATA[]]></token>
+	<token name="FINAL_EQUATIONS"><![CDATA[]]></token>
+	<token name="FINISH_TIME"><![CDATA[400.0]]></token>
+	<token name="GENERATION_BUILD"><![CDATA[4.6.1.6898]]></token>
+	<token name="GENERATION_DATE"><![CDATA[April 18, 2017]]></token>
+	<token name="GENERATION_DIR"><![CDATA[c:\temp\ShiftLogic]]></token>
+	<token name="GENERATION_TIME"><![CDATA[3:53:31 PM]]></token>
+	<token name="IMPORT_NAMES"><![CDATA[	NULL]]></token>
+	<token name="IMPORT_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="IMPORT_NAMES3"><![CDATA[]]></token>
+	<token name="IMPORT_UNITS"><![CDATA[]]></token>
+	<token name="INITIAL_EQUATIONS"><![CDATA[		/* f = 0; */
+		xx_V[12] = 0.0;
+
+		/* g_out = 1; */
+		xx_V[2] = 1.0;
+
+		/* ng = gr1; */
+		xx_V[0] = xx_P[1];
+
+		/* nt = gr1 * eff1; */
+		xx_V[1] = xx_P[1] * xx_P[21];
+
+		/* ws12 = 0; */
+		xx_V[13] = 0.0;
+
+		/* ws21 = 0; */
+		xx_V[14] = 0.0;
+
+		/* ws23 = 0; */
+		xx_V[15] = 0.0;
+
+		/* ws32 = 0; */
+		xx_V[16] = 0.0;
+
+		/* ws34 = 0; */
+		xx_V[17] = 0.0;
+
+		/* ws43 = 0; */
+		xx_V[18] = 0.0;
+
+		/* ts = 0; */
+		xx_V[5] = 0.0;
+
+		/* tb12 = 0; */
+		xx_V[6] = 0.0;
+
+		/* tb21 = 0; */
+		xx_V[7] = 0.0;
+
+		/* tb23 = 0; */
+		xx_V[8] = 0.0;
+
+		/* tb32 = 0; */
+		xx_V[9] = 0.0;
+
+		/* tb34 = 0; */
+		xx_V[10] = 0.0;
+
+		/* tb43 = 0; */
+		xx_V[11] = 0.0;
+]]></token>
+	<token name="INITIAL_VALUE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="INITIAL_VALUE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="INITIAL_VALUE_NAMES3"><![CDATA[]]></token>
+	<token name="INITIAL_VALUE_UNITS"><![CDATA[]]></token>
+	<token name="INITIAL_VALUE_VALUES"><![CDATA[]]></token>
+	<token name="INITIALIZE_ALIAS_MATRICES"><![CDATA[]]></token>
+	<token name="INITIALIZE_CONSTANTS"><![CDATA[]]></token>
+	<token name="INITIALIZE_FAVORITE_PARS"><![CDATA[]]></token>
+	<token name="INITIALIZE_FAVORITE_VARS"><![CDATA[]]></token>
+	<token name="INITIALIZE_INITIAL_VALUES"><![CDATA[]]></token>
+	<token name="INITIALIZE_INPUTS"><![CDATA[	u[0] = 0.0;		/* throt */
+	u[1] = 0.0;		/* w_trans */
+]]></token>
+	<token name="INITIALIZE_MATRICES"><![CDATA[]]></token>
+	<token name="INITIALIZE_OUTPUTS"><![CDATA[	y[0] = 0.0;		/* g_out */
+	y[1] = 0.0;		/* ng */
+	y[2] = 0.0;		/* nt */
+]]></token>
+	<token name="INITIALIZE_PARAMETERS"><![CDATA[	xx_P[0] = 0.8;		/* dur */
+	xx_P[1] = 2.48;		/* gr1 */
+	xx_P[2] = 1.48;		/* gr2 */
+	xx_P[3] = 1.0;		/* gr3 */
+	xx_P[4] = 0.75;		/* gr4 */
+	xx_P[5] = 0.02;		/* tbt1 */
+	xx_P[6] = 0.4;		/* tbt2 */
+	xx_P[7] = 0.0;		/* tby1 */
+	xx_P[8] = 0.3;		/* tby2 */
+	xx_P[9] = 49.45;		/* w12 */
+	xx_P[10] = 39.45;		/* w21 */
+	xx_P[11] = 70.8;		/* w23 */
+	xx_P[12] = 60.8;		/* w32 */
+	xx_P[13] = 103.04;		/* w34 */
+	xx_P[14] = 88.04;		/* w43 */
+	xx_P[15] = 50.41;		/* dw12 */
+	xx_P[16] = 50.41;		/* dw21 */
+	xx_P[17] = 77.75;		/* dw23 */
+	xx_P[18] = 77.75;		/* dw32 */
+	xx_P[19] = 118.26;		/* dw34 */
+	xx_P[20] = 98.26;		/* dw43 */
+	xx_P[21] = 0.94;		/* eff1 */
+	xx_P[22] = 0.96;		/* eff2 */
+	xx_P[23] = 0.97;		/* eff3 */
+	xx_P[24] = 0.97;		/* eff4 */
+]]></token>
+	<token name="INITIALIZE_STATES"><![CDATA[]]></token>
+	<token name="INPUT_EQUATIONS"><![CDATA[]]></token>
+	<token name="INPUT_NAMES"><![CDATA[	"throt",
+	"w_trans"
+]]></token>
+	<token name="INPUT_NAMES2"><![CDATA[	"throt",
+	"w_trans"
+]]></token>
+	<token name="INPUT_NAMES3"><![CDATA[throt
+w_trans
+]]></token>
+	<token name="INPUT_TO_VARIABLE_EQUATIONS"><![CDATA[	xx_V[3] = u[0];		/* throt */
+	xx_V[4] = u[1];		/* w_trans */
+]]></token>
+	<token name="INPUT_UNITS"><![CDATA[
+
+]]></token>
+	<token name="INTEGRATION_METHOD_NAME"><![CDATA[RungeKutta4]]></token>
+	<token name="MATRIX_NAMES"><![CDATA[	NULL
+]]></token>
+	<token name="MATRIX_NAMES2"><![CDATA[	NULL
+]]></token>
+	<token name="MATRIX_NAMES3"><![CDATA[
+]]></token>
+	<token name="MATRIX_UNITS"><![CDATA[]]></token>
+	<token name="MODEL_DESCRIPTION"><![CDATA[]]></token>
+	<token name="MODEL_FILE"><![CDATA[C:\Users\Tulga Ersal\Desktop\VESIM\VESIM orig.emx]]></token>
+	<token name="MODEL_FUNCTION_NAME"><![CDATA[VESIMorig]]></token>
+	<token name="MODEL_IS_DISCRETE"><![CDATA[0]]></token>
+	<token name="NUMBER_ALGLOOPS"><![CDATA[0]]></token>
+	<token name="NUMBER_ALIAS_MATRICES"><![CDATA[0]]></token>
+	<token name="NUMBER_ALIAS_VARIABLES"><![CDATA[0]]></token>
+	<token name="NUMBER_CONSTANTS"><![CDATA[0]]></token>
+	<token name="NUMBER_CONSTRAINTS"><![CDATA[0]]></token>
+	<token name="NUMBER_DEPSTATES"><![CDATA[0]]></token>
+	<token name="NUMBER_EXPORTS"><![CDATA[0]]></token>
+	<token name="NUMBER_FAVORITE_PARAMETERS"><![CDATA[0]]></token>
+	<token name="NUMBER_FAVORITE_VARIABLES"><![CDATA[0]]></token>
+	<token name="NUMBER_IMPORTS"><![CDATA[0]]></token>
+	<token name="NUMBER_INITIAL_VALUES"><![CDATA[0]]></token>
+	<token name="NUMBER_INPUTS"><![CDATA[2]]></token>
+	<token name="NUMBER_MATRICES"><![CDATA[0]]></token>
+	<token name="NUMBER_OUTPUTS"><![CDATA[3]]></token>
+	<token name="NUMBER_PARAMETERS"><![CDATA[25]]></token>
+	<token name="NUMBER_STATES"><![CDATA[0]]></token>
+	<token name="NUMBER_UNNAMED"><![CDATA[0]]></token>
+	<token name="NUMBER_VARIABLES"><![CDATA[26]]></token>
+	<token name="NUMBEROF_ABSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ADJOINTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ALGEBRAICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ALGLOOPIN"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ALGLOOPOUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_AND"><![CDATA[4]]></token>
+	<token name="NUMBEROF_ANTISYMMETRICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCCOSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCCOSHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCSINFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCSINHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCTANFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ARCTANHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ASSIGNMENT"><![CDATA[137]]></token>
+	<token name="NUMBEROF_ATAN2FUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BACKDIVISION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITAND"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITCLEAR"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITCMP"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITGET"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITOR"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITSET"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITSHIFT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITSWAPBYTES"><![CDATA[0]]></token>
+	<token name="NUMBEROF_BITXOR"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CASESTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CEILFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CODESTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_COLUMNSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CONDITIONAL"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CONSTANT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CONSTRAINTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CONSTRAINTIN"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CONSTRAINTOUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_COSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_COSHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_CROSSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DATAFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DDTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DEFAULTCASESTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DELAYFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DEPENDENTRATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DEPENDENTSTATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DEPENDENTSTATERATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DERIVATIVEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DETFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DIAGFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DISCRETERATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DISCRETESTATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DISCRETESTATERATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DISCRETETIME"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DISCRETETIMENODEWITHOUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DIV"><![CDATA[18]]></token>
+	<token name="NUMBEROF_DIVISION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DLLDYNAMICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DLLFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_DOMATLABSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EFFORTCAUSALITYSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ELEMENTDIV"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ELEMENTMUL"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ELEMENTPOWER"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ENERGYFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EQUAL"><![CDATA[16]]></token>
+	<token name="NUMBEROF_EQUALSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EQUATION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EVENTDOWNFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EVENTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EVENTUPFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXP10FUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXP2FUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDCAUSALITYFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDCOLLECTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDDIRECTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDFIRSTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDMULFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPANDEDSUMFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXPFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXTERNALINPUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EXTERNALOUTPUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_EYEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FALSE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FINALSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FINISHTIME"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FLOORFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FLOWCAUSALITYSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FORSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FREQUENCYEVENTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_FROMMATLABSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_GAUSSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_GREATER"><![CDATA[12]]></token>
+	<token name="NUMBEROF_GREATEREQUAL"><![CDATA[0]]></token>
+	<token name="NUMBEROF_HOLDFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_HOMOGENEOUSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_IFSTATEMENT"><![CDATA[42]]></token>
+	<token name="NUMBEROF_IMPULSEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INITIALFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INITIALSTATEMENT"><![CDATA[1]]></token>
+	<token name="NUMBEROF_INITIALVALUE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INNERFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INVERSEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_INVERSEHOMOGENEOUSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_JACOBIAN"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LESS"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LESSEQUAL"><![CDATA[18]]></token>
+	<token name="NUMBEROF_LIMINTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LIMITFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LINEARSOLVEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LITERAL"><![CDATA[65]]></token>
+	<token name="NUMBEROF_LOG10FUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LOG2FUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_LOGFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MAJOR"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MAJORADJOINTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MAXFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MIN"><![CDATA[57]]></token>
+	<token name="NUMBEROF_MINFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MODULO"><![CDATA[0]]></token>
+	<token name="NUMBEROF_MUL"><![CDATA[104]]></token>
+	<token name="NUMBEROF_MULTIPLYHOMOGENEOUSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_NEXTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_NONLINEARFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_NORMFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_NORMINFFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_NOTEQUAL"><![CDATA[0]]></token>
+	<token name="NUMBEROF_OR"><![CDATA[0]]></token>
+	<token name="NUMBEROF_PARAMETER"><![CDATA[25]]></token>
+	<token name="NUMBEROF_PLUS"><![CDATA[39]]></token>
+	<token name="NUMBEROF_PORT"><![CDATA[5]]></token>
+	<token name="NUMBEROF_PORTVARIABLE"><![CDATA[5]]></token>
+	<token name="NUMBEROF_POWER"><![CDATA[0]]></token>
+	<token name="NUMBEROF_PREFIXMIN"><![CDATA[0]]></token>
+	<token name="NUMBEROF_PREFIXNOT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_PREFIXPLUS"><![CDATA[0]]></token>
+	<token name="NUMBEROF_PREVIOUSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RAMPFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RANDOM"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RANDOMFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_REALTIME"><![CDATA[0]]></token>
+	<token name="NUMBEROF_REPEATSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RESETFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RESINTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_RETURNSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ROUNDFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_ROWSFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SAMPLEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SAMPLETIME"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SIGNFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SINFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SINHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SKEWFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SQRFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SQRTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STARTTIME"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STATERATE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STEPFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STEPSIZE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_STOPSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SUMFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SWITCHSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SYMMETRICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_SYSTEMVARIABLE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TABLEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TANFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TANHYPERBOLICFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TDELAYFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TILDEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TIME"><![CDATA[48]]></token>
+	<token name="NUMBEROF_TIMEEVENTFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TIMENODEWITHOUT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TIMETRIGGERFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TOMATLABSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRACEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRANSPOSEFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRIGGERDOWNFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRIGGERFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRIGGERUPFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRUE"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TRUNCFUNCTION"><![CDATA[0]]></token>
+	<token name="NUMBEROF_TYPEPARAMETER"><![CDATA[0]]></token>
+	<token name="NUMBEROF_UNNAMED"><![CDATA[3]]></token>
+	<token name="NUMBEROF_VARIABLE"><![CDATA[21]]></token>
+	<token name="NUMBEROF_WARNSTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_WHILESTATEMENT"><![CDATA[0]]></token>
+	<token name="NUMBEROF_XOR"><![CDATA[0]]></token>
+	<token name="OUTPUT_EQUATIONS"><![CDATA[]]></token>
+	<token name="OUTPUT_NAMES"><![CDATA[	"g_out",
+	"ng",
+	"nt"
+]]></token>
+	<token name="OUTPUT_NAMES2"><![CDATA[	"ng",
+	"nt",
+	"g_out"
+]]></token>
+	<token name="OUTPUT_NAMES3"><![CDATA[g_out
+ng
+nt
+]]></token>
+	<token name="OUTPUT_UNITS"><![CDATA[
+
+
+]]></token>
+	<token name="OUTPUT2_EQUATIONS"><![CDATA[
+	/* ws12 = w12 + dw12 * throt; */
+	xx_V[13] = xx_P[9] + xx_P[15] * xx_V[3];
+
+	/* ws21 = w21 + dw21 * throt; */
+	xx_V[14] = xx_P[10] + xx_P[16] * xx_V[3];
+
+	/* ws23 = w23 + dw23 * throt; */
+	xx_V[15] = xx_P[11] + xx_P[17] * xx_V[3];
+
+	/* ws32 = w32 + dw32 * throt; */
+	xx_V[16] = xx_P[12] + xx_P[18] * xx_V[3];
+
+	/* ws34 = w34 + dw34 * throt; */
+	xx_V[17] = xx_P[13] + xx_P[19] * xx_V[3];
+
+	/* ws43 = w43 + dw43 * throt; */
+	xx_V[18] = xx_P[14] + xx_P[20] * xx_V[3];
+
+	/* if g_out == 1 */
+	if (xx_V[2] == 1.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws12 */
+			if (xx_V[4] <= xx_V[13])
+			{
+				/* ng = gr1; */
+				xx_V[0] = xx_P[1];
+
+				/* nt = gr1 * eff1; */
+				xx_V[1] = xx_P[1] * xx_P[21];
+
+				/* g_out = 1; */
+				xx_V[2] = 1.0;
+			}
+			else
+			{
+				/* if w_trans > ws12 */
+				if (xx_V[4] > xx_V[13])
+				{
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+
+					/* f = 1; */
+					xx_V[12] = 1.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb12 = time + dur; */
+					xx_V[6] = xx_time + xx_P[0];
+
+					/* int1 = tbt1 * (dur) + ts; */
+					xx_V[19] = xx_P[5] * (xx_P[0]) + xx_V[5];
+
+					/* int2 = tbt2 * (dur) + ts; */
+					xx_V[20] = xx_P[6] * (xx_P[0]) + xx_V[5];
+
+					/* ng = gr1; */
+					xx_V[0] = xx_P[1];
+
+					/* nt = gr1 * eff1; */
+					xx_V[1] = xx_P[1] * xx_P[21];
+				}
+			}
+		}
+		else
+		{
+			/* if f == 2 */
+			if (xx_V[12] == 2.0)
+			{
+				/* if time <= tb21 */
+				if (xx_time <= xx_V[7])
+				{
+					/* ng = gr2 + ((gr1 - gr2) / dur) * (time - ts); */
+					xx_V[0] = xx_P[2] + ((xx_P[1] - xx_P[2]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* nt = gr2 * eff2 + ((gr1 * eff1 - gr2 * eff2) / dur) * (time - ts); */
+					xx_V[1] = xx_P[2] * xx_P[22] + ((xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* g_out = 1; */
+					xx_V[2] = 1.0;
+				}
+				else
+				{
+					/* if time > tb21 */
+					if (xx_time > xx_V[7])
+					{
+						/* ng = gr1; */
+						xx_V[0] = xx_P[1];
+
+						/* nt = gr1 * eff1; */
+						xx_V[1] = xx_P[1] * xx_P[21];
+
+						/* g_out = 1; */
+						xx_V[2] = 1.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		/* if g_out == 2 */
+		if (xx_V[2] == 2.0)
+		{
+			/* if f == 0 */
+			if (xx_V[12] == 0.0)
+			{
+				/* if w_trans <= ws21 */
+				if (xx_V[4] <= xx_V[14])
+				{
+					/* g_out = 1; */
+					xx_V[2] = 1.0;
+
+					/* f = 2; */
+					xx_V[12] = 2.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb21 = time + dur; */
+					xx_V[7] = xx_time + xx_P[0];
+
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+				}
+
+				/* if w_trans > ws21 and w_trans <= ws23 */
+				if (xx_V[4] > xx_V[14] && xx_V[4] <= xx_V[15])
+				{
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+				}
+
+				/* if w_trans > ws23 */
+				if (xx_V[4] > xx_V[15])
+				{
+					/* g_out = 3; */
+					xx_V[2] = 3.0;
+
+					/* f = 1; */
+					xx_V[12] = 1.0;
+
+					/* ts = time; */
+					xx_V[5] = xx_time;
+
+					/* tb23 = time + dur; */
+					xx_V[8] = xx_time + xx_P[0];
+
+					/* int1 = tbt1 * dur + ts; */
+					xx_V[19] = xx_P[5] * xx_P[0] + xx_V[5];
+
+					/* int2 = tbt2 * dur + ts; */
+					xx_V[20] = xx_P[6] * xx_P[0] + xx_V[5];
+
+					/* ng = gr2; */
+					xx_V[0] = xx_P[2];
+
+					/* nt = gr2 * eff2; */
+					xx_V[1] = xx_P[2] * xx_P[22];
+				}
+			}
+			else
+			{
+				/* if f == 1 */
+				if (xx_V[12] == 1.0)
+				{
+					/* if time <= tb12 */
+					if (xx_time <= xx_V[6])
+					{
+						/* y1 = tby1 * (gr1 * eff1 - gr2 * eff2) + gr2 * eff2; */
+						xx_V[21] = xx_P[7] * (xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) + xx_P[2] * xx_P[22];
+
+						/* y2 = tby2 * (gr1 * eff1 - gr2 * eff2) + gr2 * eff2; */
+						xx_V[22] = xx_P[8] * (xx_P[1] * xx_P[21] - xx_P[2] * xx_P[22]) + xx_P[2] * xx_P[22];
+
+						/* m1 = (y1 - gr1 * eff1) / (tbt1 * dur); */
+						xx_V[23] = (xx_V[21] - xx_P[1] * xx_P[21]) / (xx_P[5] * xx_P[0]);
+
+						/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+						xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+						/* m3 = (gr2 * eff2 - y2) / ((1 - tbt2) * dur); */
+						xx_V[25] = (xx_P[2] * xx_P[22] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+						/* ng = gr1 - ((gr1 - gr2) / dur) * (time - ts); */
+						xx_V[0] = xx_P[1] - ((xx_P[1] - xx_P[2]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+						/* if (time - ts) <= (tbt1 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+						{
+							/* nt = gr1 * eff1 + m1 * (time - ts); */
+							xx_V[1] = xx_P[1] * xx_P[21] + xx_V[23] * (xx_time - xx_V[5]);
+						}
+						else
+						{
+							/* if (time - ts) <= (tbt2 * dur) */
+							if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+							{
+								/* nt = y1 + m2 * (time - int1); */
+								xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+							}
+							else
+							{
+								/* nt = y2 + m3 * (time - int2); */
+								xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+							}
+						}
+					}
+					else
+					{
+						/* if time > tb12 */
+						if (xx_time > xx_V[6])
+						{
+							/* ng = gr2; */
+							xx_V[0] = xx_P[2];
+
+							/* nt = gr2 * eff2; */
+							xx_V[1] = xx_P[2] * xx_P[22];
+
+							/* g_out = 2; */
+							xx_V[2] = 2.0;
+
+							/* f = 0; */
+							xx_V[12] = 0.0;
+						}
+					}
+				}
+			}
+
+			/* if f == 2 and g_out == 2 */
+			if (xx_V[12] == 2.0 && xx_V[2] == 2.0)
+			{
+				/* if time <= tb32 */
+				if (xx_time <= xx_V[9])
+				{
+					/* ng = gr3 + ((gr2 - gr3) / dur) * (time - ts); */
+					xx_V[0] = xx_P[3] + ((xx_P[2] - xx_P[3]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* nt = gr3 * eff3 + ((gr2 * eff2 - gr3 * eff3) / dur) * (time - ts); */
+					xx_V[1] = xx_P[3] * xx_P[23] + ((xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* g_out = 2; */
+					xx_V[2] = 2.0;
+				}
+				else
+				{
+					/* if time > tb32 */
+					if (xx_time > xx_V[9])
+					{
+						/* ng = gr2; */
+						xx_V[0] = xx_P[2];
+
+						/* nt = gr2 * eff2; */
+						xx_V[1] = xx_P[2] * xx_P[22];
+
+						/* g_out = 2; */
+						xx_V[2] = 2.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+
+	/* if g_out == 3 */
+	if (xx_V[2] == 3.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws32 */
+			if (xx_V[4] <= xx_V[16])
+			{
+				/* g_out = 2; */
+				xx_V[2] = 2.0;
+
+				/* f = 2; */
+				xx_V[12] = 2.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb32 = time + dur; */
+				xx_V[9] = xx_time + xx_P[0];
+
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+			}
+
+			/* if w_trans > ws32 and w_trans <= ws34 */
+			if (xx_V[4] > xx_V[16] && xx_V[4] <= xx_V[17])
+			{
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+			}
+
+			/* if w_trans > ws34 */
+			if (xx_V[4] > xx_V[17])
+			{
+				/* g_out = 4; */
+				xx_V[2] = 4.0;
+
+				/* f = 1; */
+				xx_V[12] = 1.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb34 = time + dur; */
+				xx_V[10] = xx_time + xx_P[0];
+
+				/* int1 = tbt1 * dur + ts; */
+				xx_V[19] = xx_P[5] * xx_P[0] + xx_V[5];
+
+				/* int2 = tbt2 * dur + ts; */
+				xx_V[20] = xx_P[6] * xx_P[0] + xx_V[5];
+
+				/* ng = gr3; */
+				xx_V[0] = xx_P[3];
+
+				/* nt = gr3 * eff3; */
+				xx_V[1] = xx_P[3] * xx_P[23];
+			}
+		}
+		else
+		{
+			/* if f == 1 */
+			if (xx_V[12] == 1.0)
+			{
+				/* if time <= tb23 */
+				if (xx_time <= xx_V[8])
+				{
+					/* y1 = tby1 * (gr2 * eff2 - gr3 * eff3) + gr3 * eff3; */
+					xx_V[21] = xx_P[7] * (xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) + xx_P[3] * xx_P[23];
+
+					/* y2 = tby2 * (gr2 * eff2 - gr3 * eff3) + gr3 * eff3; */
+					xx_V[22] = xx_P[8] * (xx_P[2] * xx_P[22] - xx_P[3] * xx_P[23]) + xx_P[3] * xx_P[23];
+
+					/* m1 = (y1 - gr2 * eff2) / (tbt1 * dur); */
+					xx_V[23] = (xx_V[21] - xx_P[2] * xx_P[22]) / (xx_P[5] * xx_P[0]);
+
+					/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+					xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+					/* m3 = (gr3 * eff3 - y2) / ((1 - tbt2) * dur); */
+					xx_V[25] = (xx_P[3] * xx_P[23] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+					/* ng = gr2 - ((gr2 - gr3) / dur) * (time - ts); */
+					xx_V[0] = xx_P[2] - ((xx_P[2] - xx_P[3]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* if (time - ts) <= (tbt1 * dur) */
+					if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+					{
+						/* nt = gr2 * eff2 + m1 * (time - ts); */
+						xx_V[1] = xx_P[2] * xx_P[22] + xx_V[23] * (xx_time - xx_V[5]);
+					}
+					else
+					{
+						/* if (time - ts) <= (tbt2 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+						{
+							/* nt = y1 + m2 * (time - int1); */
+							xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+						}
+						else
+						{
+							/* nt = y2 + m3 * (time - int2); */
+							xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+						}
+					}
+				}
+				else
+				{
+					/* if time > tb23 */
+					if (xx_time > xx_V[8])
+					{
+						/* ng = gr3; */
+						xx_V[0] = xx_P[3];
+
+						/* nt = gr3 * eff3; */
+						xx_V[1] = xx_P[3] * xx_P[23];
+
+						/* g_out = 3; */
+						xx_V[2] = 3.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+
+		/* if f == 2 and g_out == 3 */
+		if (xx_V[12] == 2.0 && xx_V[2] == 3.0)
+		{
+			/* if time <= tb43 */
+			if (xx_time <= xx_V[11])
+			{
+				/* ng = gr4 + ((gr3 - gr4) / dur) * (time - ts); */
+				xx_V[0] = xx_P[4] + ((xx_P[3] - xx_P[4]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+				/* nt = gr4 * eff4 + ((gr3 * eff3 - gr4 * eff4) / dur) * (time - ts); */
+				xx_V[1] = xx_P[4] * xx_P[24] + ((xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+			}
+			else
+			{
+				/* if time > tb43 */
+				if (xx_time > xx_V[11])
+				{
+					/* ng = gr3; */
+					xx_V[0] = xx_P[3];
+
+					/* nt = gr3 * eff3; */
+					xx_V[1] = xx_P[3] * xx_P[23];
+
+					/* g_out = 3; */
+					xx_V[2] = 3.0;
+
+					/* f = 0; */
+					xx_V[12] = 0.0;
+				}
+			}
+		}
+	}
+
+	/* if g_out == 4 */
+	if (xx_V[2] == 4.0)
+	{
+		/* if f == 0 */
+		if (xx_V[12] == 0.0)
+		{
+			/* if w_trans <= ws43 */
+			if (xx_V[4] <= xx_V[18])
+			{
+				/* g_out = 3; */
+				xx_V[2] = 3.0;
+
+				/* f = 2; */
+				xx_V[12] = 2.0;
+
+				/* ts = time; */
+				xx_V[5] = xx_time;
+
+				/* tb43 = time + dur; */
+				xx_V[11] = xx_time + xx_P[0];
+
+				/* ng = gr4; */
+				xx_V[0] = xx_P[4];
+
+				/* nt = gr4 * eff4; */
+				xx_V[1] = xx_P[4] * xx_P[24];
+			}
+
+			/* if w_trans > ws43 */
+			if (xx_V[4] > xx_V[18])
+			{
+				/* ng = gr4; */
+				xx_V[0] = xx_P[4];
+
+				/* nt = gr4 * eff4; */
+				xx_V[1] = xx_P[4] * xx_P[24];
+
+				/* g_out = 4; */
+				xx_V[2] = 4.0;
+			}
+		}
+		else
+		{
+			/* if f == 1 */
+			if (xx_V[12] == 1.0)
+			{
+				/* if time <= tb34 */
+				if (xx_time <= xx_V[10])
+				{
+					/* ng = gr3 - ((gr3 - gr4) / dur) * (time - ts); */
+					xx_V[0] = xx_P[3] - ((xx_P[3] - xx_P[4]) / xx_P[0]) * (xx_time - xx_V[5]);
+
+					/* y1 = tby1 * (gr3 * eff3 - gr4 * eff4) + gr4 * eff4; */
+					xx_V[21] = xx_P[7] * (xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) + xx_P[4] * xx_P[24];
+
+					/* y2 = tby2 * (gr3 * eff3 - gr4 * eff4) + gr4 * eff4; */
+					xx_V[22] = xx_P[8] * (xx_P[3] * xx_P[23] - xx_P[4] * xx_P[24]) + xx_P[4] * xx_P[24];
+
+					/* m1 = (y1 - gr3 * eff3) / (tbt1 * dur); */
+					xx_V[23] = (xx_V[21] - xx_P[3] * xx_P[23]) / (xx_P[5] * xx_P[0]);
+
+					/* m2 = (y2 - y1) / ((tbt2 - tbt1) * dur); */
+					xx_V[24] = (xx_V[22] - xx_V[21]) / ((xx_P[6] - xx_P[5]) * xx_P[0]);
+
+					/* m3 = (gr4 * eff4 - y2) / ((1 - tbt2) * dur); */
+					xx_V[25] = (xx_P[4] * xx_P[24] - xx_V[22]) / ((1.0 - xx_P[6]) * xx_P[0]);
+
+					/* if (time - ts) <= (tbt1 * dur) */
+					if ((xx_time - xx_V[5]) <= (xx_P[5] * xx_P[0]))
+					{
+						/* nt = gr3 * eff3 + m1 * (time - ts); */
+						xx_V[1] = xx_P[3] * xx_P[23] + xx_V[23] * (xx_time - xx_V[5]);
+					}
+					else
+					{
+						/* if (time - ts) <= (tbt2 * dur) */
+						if ((xx_time - xx_V[5]) <= (xx_P[6] * xx_P[0]))
+						{
+							/* nt = y1 + m2 * (time - int1); */
+							xx_V[1] = xx_V[21] + xx_V[24] * (xx_time - xx_V[19]);
+						}
+						else
+						{
+							/* nt = y2 + m3 * (time - int2); */
+							xx_V[1] = xx_V[22] + xx_V[25] * (xx_time - xx_V[20]);
+						}
+					}
+				}
+				else
+				{
+					/* if time > tb34 */
+					if (xx_time > xx_V[10])
+					{
+						/* ng = gr4; */
+						xx_V[0] = xx_P[4];
+
+						/* nt = gr4 * eff4; */
+						xx_V[1] = xx_P[4] * xx_P[24];
+
+						/* g_out = 4; */
+						xx_V[2] = 4.0;
+
+						/* f = 0; */
+						xx_V[12] = 0.0;
+					}
+				}
+			}
+		}
+	}
+
+]]></token>
+	<token name="PARAMETER_NAMES"><![CDATA[	"dur",
+	"gr1",
+	"gr2",
+	"gr3",
+	"gr4",
+	"tbt1",
+	"tbt2",
+	"tby1",
+	"tby2",
+	"w12",
+	"w21",
+	"w23",
+	"w32",
+	"w34",
+	"w43",
+	"dw12",
+	"dw21",
+	"dw23",
+	"dw32",
+	"dw34",
+	"dw43",
+	"eff1",
+	"eff2",
+	"eff3",
+	"eff4"
+]]></token>
+	<token name="PARAMETER_NAMES2"><![CDATA[	"dur",
+	"gr1",
+	"gr2",
+	"gr3",
+	"gr4",
+	"tbt1",
+	"tbt2",
+	"tby1",
+	"tby2",
+	"w12",
+	"w21",
+	"w23",
+	"w32",
+	"w34",
+	"w43",
+	"dw12",
+	"dw21",
+	"dw23",
+	"dw32",
+	"dw34",
+	"dw43",
+	"eff1",
+	"eff2",
+	"eff3",
+	"eff4"
+]]></token>
+	<token name="PARAMETER_NAMES3"><![CDATA[dur
+gr1
+gr2
+gr3
+gr4
+tbt1
+tbt2
+tby1
+tby2
+w12
+w21
+w23
+w32
+w34
+w43
+dw12
+dw21
+dw23
+dw32
+dw34
+dw43
+eff1
+eff2
+eff3
+eff4
+]]></token>
+	<token name="PARAMETER_UNITS"><![CDATA[
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></token>
+	<token name="PARAMETER_VALUES"><![CDATA[0.8
+2.48
+1.48
+1.0
+0.75
+0.02
+0.4
+0.0
+0.3
+49.45
+39.45
+70.8
+60.8
+103.04
+88.04
+50.41
+50.41
+77.75
+77.75
+118.26
+98.26
+0.94
+0.96
+0.97
+0.97
+]]></token>
+	<token name="RATE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="RATE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="RATE_NAMES3"><![CDATA[]]></token>
+	<token name="RATE_UNITS"><![CDATA[]]></token>
+	<token name="SIMULINK_MODEL"><![CDATA[Model {
+  Name			  "VESIM orig_"
+  System {
+    Name		    "VESIM orig_"
+    Open		    on
+    Block {
+      BlockType		      SubSystem
+      Name		      "SubSystem"
+      Ports		      [2, 3]
+      Position		      [100, 100, 300, 170]
+      ShowPortLabels	      on
+	  MaskType		      "20-sim 4.6 S-Function block"
+	  MaskDescription	      "This block is generated by the 20-sim Matlab Code Generator. 
+
+* look under the mask to get information on the ports
+* press Help for more detailed information
+* the parameters of this block are:
+
+"
+	  MaskHelp	      "This block is generated by the 20-sim Matlab Code Generator<br>
+The block parameters are:<br><blockquote></blockquote>
+Generated at:<br>
+<blockquote><b>date:  </b>April 18, 2017<br>
+<b>time:  </b>3:53:31 PM<br></blockquote>
+From the following 20-sim model:<br>
+<blockquote><b>submodel:  </b>ShiftLogic<br>
+<b>model:  </b>VESIM orig<br>
+<b>file:  </b>C:\\Users\\Tulga Ersal\\Desktop\\VESIM\\VESIM orig.emx<br>
+<b>experiment:  </b>C:\\Users\\Tulga Ersal\\Desktop\\VESIM\\VESIM orig.emx<br></blockquote>
+Using the following 20-sim license:<br>
+<blockquote><b>user:  </b>The University of Michigan<br>
+<b>from:  </b>20-sim 4.6 Student License<br>
+<b>build: </b>4.6.1.6898<br></blockquote>"
+	  MaskPromptString	      ""
+	  MaskVariables	      ";"
+	  MaskDisplay		  ""
+	  MaskIconFrame		  off
+	  MaskValueString	      ""
+      System {
+        Name			"SubSystem"
+        Location		[478, 83, 978, 384]
+        Block {
+              BlockType		  Inport
+		  Name			  "throt"
+		  Position		  [40, 40, 60, 60]
+		  Port			  "1"
+        }
+        Block {
+              BlockType		  Inport
+		  Name			  "w_trans"
+		  Position		  [40, 80, 60, 100]
+		  Port			  "2"
+        }
+		Block {
+		  BlockType		  Mux
+		  Name			  "Mux"
+		  Ports			  [2, 1]
+		  Position		  [130, 50, 135, 90]
+		  Inputs		  "[1 1 ]"
+		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  Demux
+		  Name			  "Demux"
+		  Ports			  [1, 3]
+		  Position		  [290, 40, 295, 100]
+		  Outputs		  "[1 1 1 ]"
+		  DisplayOption		  "bar"
+		  BusSelectionMode    off
+		}
+		Block {
+		  BlockType		  "S-Function"
+		  Name			  "S-Function"
+		  Ports			  [1, 1]
+		  Position		  [170, 50, 250, 90]
+		  FunctionName		  "VESIM orig"
+		  Parameters	      ""
+		}
+        Block {
+              BlockType		  Outport
+		  Name			  "g_out"
+		  Position		  [380, 20, 400, 40]
+		  Port			  "1"
+        }
+        Block {
+              BlockType		  Outport
+		  Name			  "ng"
+		  Position		  [380, 60, 400, 80]
+		  Port			  "2"
+        }
+        Block {
+              BlockType		  Outport
+		  Name			  "nt"
+		  Position		  [380, 100, 400, 120]
+		  Port			  "3"
+        }
+		Line {
+		  SrcBlock		  "throt"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "w_trans"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  1
+		  DstBlock		  "g_out"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  2
+		  DstBlock		  "ng"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  3
+		  DstBlock		  "nt"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Mux"
+		  SrcPort		  1
+		  DstBlock		  "S-Function"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "S-Function"
+		  SrcPort		  1
+		  DstBlock		  "Demux"
+		  DstPort		  1
+		}
+      }
+    }
+  }
+}
+]]></token>
+	<token name="SIMULINK_SUBMODEL"><![CDATA[Model {
+  Name			  "ShiftLogic_"
+  System {
+    Name		    "ShiftLogic_"
+    Open		    on
+    Block {
+      BlockType		      SubSystem
+      Name		      "ShiftLogic"
+      Ports		      [2, 3]
+      Position		      [159, 175, 241, 225]
+
+      ShowPortLabels	      on
+	  MaskType		      "20-sim 4.6 S-Function block"
+	  MaskDescription	      "This block is generated by the 20-sim Matlab Code Generator. 
+
+* look under the mask to get information on the ports
+* press Help for more detailed information
+* the parameters of this block are:
+
+"
+	  MaskHelp	      "This block is generated by the 20-sim Matlab Code Generator<br>
+The block parameters are:<br><blockquote></blockquote>
+Generated at:<br>
+<blockquote><b>date:  </b>April 18, 2017<br>
+<b>time:  </b>3:53:31 PM<br></blockquote>
+From the following 20-sim model:<br>
+<blockquote><b>submodel:  </b>ShiftLogic<br>
+<b>model:  </b>VESIM orig<br>
+<b>file:  </b>C:\\Users\\Tulga Ersal\\Desktop\\VESIM\\VESIM orig.emx<br>
+<b>experiment:  </b>C:\\Users\\Tulga Ersal\\Desktop\\VESIM\\VESIM orig.emx<br></blockquote>
+Using the following 20-sim license:<br>
+<blockquote><b>user:  </b>The University of Michigan<br>
+<b>from:  </b>20-sim 4.6 Student License<br>
+<b>build: </b>4.6.1.6898<br></blockquote>"
+	  MaskPromptString	      ""
+	  MaskVariables	      ";"
+	  MaskDisplay		  "patch ([216 296 296 216 216 ], [88.3 88.3 135.7 135.7 88.3 ], [1 1 1] )
+color ('black ')
+plot ([216 296 296 216 216 ], [88.3 88.3 135.7 135.7 88.3 ])
+color ('black')
+text (256,112.3,'ShiftLogic','hor','center')"
+	  MaskIconFrame		  off
+	  MaskValueString	      ""
+      System {
+        Name			"ShiftLogic"
+        Location		[478, 83, 978, 384]
+        Block {
+              BlockType		  Inport
+		  Name			  "throt"
+		  Position		  [40, 40, 60, 60]
+		  Port			  "1"
+        }
+        Block {
+              BlockType		  Inport
+		  Name			  "w_trans"
+		  Position		  [40, 80, 60, 100]
+		  Port			  "2"
+        }
+		Block {
+		  BlockType		  Mux
+		  Name			  "Mux"
+		  Ports			  [2, 1]
+		  Position		  [130, 50, 135, 90]
+		  Inputs		  "[1 1 ]"
+		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  Demux
+		  Name			  "Demux"
+		  Ports			  [1, 3]
+		  Position		  [290, 40, 295, 100]
+		  Outputs		  "[1 1 1 ]"
+		  DisplayOption		  "bar"
+		  BusSelectionMode    off
+		}
+		Block {
+		  BlockType		  "S-Function"
+		  Name			  "S-Function"
+		  Ports			  [1, 1]
+		  Position		  [170, 50, 250, 90]
+		  FunctionName		  "ShiftLogic"
+		  Parameters	      ""
+		}
+        Block {
+              BlockType		  Outport
+		  Name			  "g_out"
+		  Position		  [380, 20, 400, 40]
+		  Port			  "1"
+        }
+        Block {
+              BlockType		  Outport
+		  Name			  "ng"
+		  Position		  [380, 60, 400, 80]
+		  Port			  "2"
+        }
+        Block {
+              BlockType		  Outport
+		  Name			  "nt"
+		  Position		  [380, 100, 400, 120]
+		  Port			  "3"
+        }
+		Line {
+		  SrcBlock		  "throt"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "w_trans"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  1
+		  DstBlock		  "g_out"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  2
+		  DstBlock		  "ng"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  3
+		  DstBlock		  "nt"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Mux"
+		  SrcPort		  1
+		  DstBlock		  "S-Function"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "S-Function"
+		  SrcPort		  1
+		  DstBlock		  "Demux"
+		  DstPort		  1
+		}
+      }
+    }
+  }
+}
+]]></token>
+	<token name="START_TIME"><![CDATA[0.0]]></token>
+	<token name="STATE_NAMES"><![CDATA[	NULL]]></token>
+	<token name="STATE_NAMES2"><![CDATA[	NULL]]></token>
+	<token name="STATE_NAMES3"><![CDATA[]]></token>
+	<token name="STATE_UNITS"><![CDATA[]]></token>
+	<token name="STATIC_EQUATIONS"><![CDATA[]]></token>
+	<token name="TIME_STEP_SIZE"><![CDATA[0.01]]></token>
+	<token name="USER_NAME"><![CDATA[The University of Michigan]]></token>
+	<token name="VARIABLE_NAMES"><![CDATA[	"ng",
+	"nt",
+	"g_out",
+	"throt",
+	"w_trans",
+	"ts",
+	"tb12",
+	"tb21",
+	"tb23",
+	"tb32",
+	"tb34",
+	"tb43",
+	"f",
+	"ws12",
+	"ws21",
+	"ws23",
+	"ws32",
+	"ws34",
+	"ws43",
+	"int1",
+	"int2",
+	"y1",
+	"y2",
+	"m1",
+	"m2",
+	"m3"
+]]></token>
+	<token name="VARIABLE_NAMES2"><![CDATA[	"ng",
+	"nt",
+	"g_out",
+	"throt",
+	"w_trans",
+	"ts",
+	"tb12",
+	"tb21",
+	"tb23",
+	"tb32",
+	"tb34",
+	"tb43",
+	"f",
+	"ws12",
+	"ws21",
+	"ws23",
+	"ws32",
+	"ws34",
+	"ws43",
+	"int1",
+	"int2",
+	"y1",
+	"y2",
+	"m1",
+	"m2",
+	"m3"
+]]></token>
+	<token name="VARIABLE_NAMES3"><![CDATA[ng
+nt
+g_out
+throt
+w_trans
+ts
+tb12
+tb21
+tb23
+tb32
+tb34
+tb43
+f
+ws12
+ws21
+ws23
+ws32
+ws34
+ws43
+int1
+int2
+y1
+y2
+m1
+m2
+m3
+]]></token>
+	<token name="VARIABLE_TO_OUTPUT_EQUATIONS"><![CDATA[	y[0] = 	xx_V[2];		/* g_out */
+	y[1] = 	xx_V[0];		/* ng */
+	y[2] = 	xx_V[1];		/* nt */
+]]></token>
+	<token name="VARIABLE_UNITS"><![CDATA[
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></token>
+	<token name="WORK_ARRAY_SIZE"><![CDATA[0]]></token>
+	<token name="XX_ALG_IN_ARRAY_NAME"><![CDATA[A]]></token>
+	<token name="XX_ALG_OUT_ARRAY_NAME"><![CDATA[a]]></token>
+	<token name="XX_DEP_RATE_ARRAY_NAME"><![CDATA[r]]></token>
+	<token name="XX_DEP_STATE_ARRAY_NAME"><![CDATA[S]]></token>
+	<token name="XX_EXT_IN_ARRAY_NAME"><![CDATA[e]]></token>
+	<token name="XX_EXT_OUT_ARRAY_NAME"><![CDATA[E]]></token>
+	<token name="XX_FAVORITE_PARS_ARRAY_NAME"><![CDATA[F]]></token>
+	<token name="XX_FAVORITE_VARS_ARRAY_NAME"><![CDATA[f]]></token>
+	<token name="XX_INITIAL_VALUE_ARRAY_NAME"><![CDATA[I]]></token>
+	<token name="VARPREFIX"><![CDATA[xx_]]></token>
+	<token name="FUNCTIONPREFIX"><![CDATA[XX]]></token>
+	<token name="XX_TIME"><![CDATA[time]]></token>
+	<token name="XX_INITIALIZE"><![CDATA[initialize]]></token>
+	<token name="XX_VARIABLE_ARRAY_NAME"><![CDATA[V]]></token>
+	<token name="XX_PARAMETER_ARRAY_NAME"><![CDATA[P]]></token>
+	<token name="XX_CONSTANT_ARRAY_NAME"><![CDATA[C]]></token>
+	<token name="XX_STATE_ARRAY_NAME"><![CDATA[s]]></token>
+	<token name="XX_RATE_ARRAY_NAME"><![CDATA[R]]></token>
+	<token name="XX_MATRIX_ARRAY_NAME"><![CDATA[M]]></token>
+	<token name="XX_UNNAMED_ARRAY_NAME"><![CDATA[U]]></token>
+	<token name="FORMAJORVERSION"><![CDATA[4]]></token>
+	<token name="FORMINORVERSION"><![CDATA[0]]></token>
+	<token name="FORMAJORBUILD"><![CDATA[1]]></token>
+	<token name="FORMINORBUILD"><![CDATA[5]]></token>
+	<token name="MAJORVERSION"><![CDATA[4]]></token>
+	<token name="MINORVERSION"><![CDATA[6]]></token>
+	<token name="MAJORBUILD"><![CDATA[1]]></token>
+	<token name="MINORBUILD"><![CDATA[6898]]></token>
+	<token name="SKIP_MODEL_CONFIGURATION"><![CDATA[1]]></token>
+	<token name="TEMPLATENAME"><![CDATA[Simulink]]></token>
+	<token name="TEMPLATEDIR"><![CDATA[C:\Program Files (x86)\20-sim 4.6\Ccode\Simulink]]></token>
+	<token name="TEMPLATE_DIR"><![CDATA[C:\Program Files (x86)\20-sim 4.6\Ccode\Simulink]]></token>
+	<token name="TOKENNAMES"><![CDATA[MODEL_NAME
+20SIM_DIR
+SUBMODEL_NAME
+ALGLOOP_NAMES
+ALGLOOP_NAMES2
+ALGLOOP_NAMES3
+ALGLOOP_UNITS
+ALIAS_EQUATIONS
+ALIAS_MATRIX_NAMES
+ALIAS_MATRIX_NAMES2
+ALIAS_MATRIX_NAMES3
+ALIAS_MATRIX_UNITS
+ALIAS_VARIABLE_INDICES
+ALIAS_VARIABLE_NAMES
+ALIAS_VARIABLE_NAMES2
+ALIAS_VARIABLE_NAMES3
+ALIAS_VARIABLE_UNITS
+COMPANY_NAME
+CONSTANT_NAMES
+CONSTANT_NAMES2
+CONSTANT_NAMES3
+CONSTANT_UNITS
+CONSTANT_VALUES
+CONSTRAINT_NAMES
+CONSTRAINT_NAMES2
+CONSTRAINT_NAMES3
+CONSTRAINT_UNITS
+DEPRATE_NAMES
+DEPRATE_NAMES2
+DEPRATE_NAMES3
+DEPRATE_UNITS
+DEPSTATE_NAMES
+DEPSTATE_NAMES2
+DEPSTATE_NAMES3
+DEPSTATE_UNITS
+DIRECT_FEEDTHROUGH
+DYNAMIC_EQUATIONS
+EXPERIMENT_NAME
+EXPORT_NAMES
+EXPORT_NAMES2
+EXPORT_NAMES3
+EXPORT_UNITS
+FAVORITE_PARAMETER_NAMES
+FAVORITE_PARAMETER_NAMES2
+FAVORITE_PARAMETER_NAMES3
+FAVORITE_PARAMETER_UNITS
+FAVORITE_PARS_EQUATIONS
+FAVORITE_VARIABLE_NAMES
+FAVORITE_VARIABLE_NAMES2
+FAVORITE_VARIABLE_NAMES3
+FAVORITE_VARIABLE_UNITS
+FAVORITE_VARS_EQUATIONS
+FILE_NAME
+FINAL_EQUATIONS
+FINISH_TIME
+GENERATION_BUILD
+GENERATION_DATE
+GENERATION_DIR
+GENERATION_TIME
+IMPORT_NAMES
+IMPORT_NAMES2
+IMPORT_NAMES3
+IMPORT_UNITS
+INITIAL_EQUATIONS
+INITIAL_VALUE_NAMES
+INITIAL_VALUE_NAMES2
+INITIAL_VALUE_NAMES3
+INITIAL_VALUE_UNITS
+INITIAL_VALUE_VALUES
+INITIALIZE_ALIAS_MATRICES
+INITIALIZE_CONSTANTS
+INITIALIZE_FAVORITE_PARS
+INITIALIZE_FAVORITE_VARS
+INITIALIZE_INITIAL_VALUES
+INITIALIZE_INPUTS
+INITIALIZE_MATRICES
+INITIALIZE_OUTPUTS
+INITIALIZE_PARAMETERS
+INITIALIZE_STATES
+INPUT_EQUATIONS
+INPUT_NAMES
+INPUT_NAMES2
+INPUT_NAMES3
+INPUT_TO_VARIABLE_EQUATIONS
+INPUT_UNITS
+INTEGRATION_METHOD_NAME
+MATRIX_NAMES
+MATRIX_NAMES2
+MATRIX_NAMES3
+MATRIX_UNITS
+MODEL_DESCRIPTION
+MODEL_FILE
+MODEL_FUNCTION_NAME
+MODEL_IS_DISCRETE
+NUMBER_ALGLOOPS
+NUMBER_ALIAS_MATRICES
+NUMBER_ALIAS_VARIABLES
+NUMBER_CONSTANTS
+NUMBER_CONSTRAINTS
+NUMBER_DEPSTATES
+NUMBER_EXPORTS
+NUMBER_FAVORITE_PARAMETERS
+NUMBER_FAVORITE_VARIABLES
+NUMBER_IMPORTS
+NUMBER_INITIAL_VALUES
+NUMBER_INPUTS
+NUMBER_MATRICES
+NUMBER_OUTPUTS
+NUMBER_PARAMETERS
+NUMBER_STATES
+NUMBER_UNNAMED
+NUMBER_VARIABLES
+NUMBEROF_ABSFUNCTION
+NUMBEROF_ADJOINTFUNCTION
+NUMBEROF_ALGEBRAICFUNCTION
+NUMBEROF_ALGLOOPIN
+NUMBEROF_ALGLOOPOUT
+NUMBEROF_AND
+NUMBEROF_ANTISYMMETRICFUNCTION
+NUMBEROF_ARCCOSFUNCTION
+NUMBEROF_ARCCOSHYPERBOLICFUNCTION
+NUMBEROF_ARCSINFUNCTION
+NUMBEROF_ARCSINHYPERBOLICFUNCTION
+NUMBEROF_ARCTANFUNCTION
+NUMBEROF_ARCTANHYPERBOLICFUNCTION
+NUMBEROF_ASSIGNMENT
+NUMBEROF_ATAN2FUNCTION
+NUMBEROF_BACKDIVISION
+NUMBEROF_BITAND
+NUMBEROF_BITCLEAR
+NUMBEROF_BITCMP
+NUMBEROF_BITGET
+NUMBEROF_BITOR
+NUMBEROF_BITSET
+NUMBEROF_BITSHIFT
+NUMBEROF_BITSWAPBYTES
+NUMBEROF_BITXOR
+NUMBEROF_CASESTATEMENT
+NUMBEROF_CEILFUNCTION
+NUMBEROF_CODESTATEMENT
+NUMBEROF_COLUMNSFUNCTION
+NUMBEROF_CONDITIONAL
+NUMBEROF_CONSTANT
+NUMBEROF_CONSTRAINTFUNCTION
+NUMBEROF_CONSTRAINTIN
+NUMBEROF_CONSTRAINTOUT
+NUMBEROF_COSFUNCTION
+NUMBEROF_COSHYPERBOLICFUNCTION
+NUMBEROF_CROSSFUNCTION
+NUMBEROF_DATAFUNCTION
+NUMBEROF_DDTFUNCTION
+NUMBEROF_DEFAULTCASESTATEMENT
+NUMBEROF_DELAYFUNCTION
+NUMBEROF_DEPENDENTRATE
+NUMBEROF_DEPENDENTSTATE
+NUMBEROF_DEPENDENTSTATERATE
+NUMBEROF_DERIVATIVEFUNCTION
+NUMBEROF_DETFUNCTION
+NUMBEROF_DIAGFUNCTION
+NUMBEROF_DISCRETERATE
+NUMBEROF_DISCRETESTATE
+NUMBEROF_DISCRETESTATERATE
+NUMBEROF_DISCRETETIME
+NUMBEROF_DISCRETETIMENODEWITHOUT
+NUMBEROF_DIV
+NUMBEROF_DIVISION
+NUMBEROF_DLLDYNAMICFUNCTION
+NUMBEROF_DLLFUNCTION
+NUMBEROF_DOMATLABSTATEMENT
+NUMBEROF_EFFORTCAUSALITYSTATEMENT
+NUMBEROF_ELEMENTDIV
+NUMBEROF_ELEMENTMUL
+NUMBEROF_ELEMENTPOWER
+NUMBEROF_ENERGYFUNCTION
+NUMBEROF_EQUAL
+NUMBEROF_EQUALSTATEMENT
+NUMBEROF_EQUATION
+NUMBEROF_EVENTDOWNFUNCTION
+NUMBEROF_EVENTFUNCTION
+NUMBEROF_EVENTUPFUNCTION
+NUMBEROF_EXP10FUNCTION
+NUMBEROF_EXP2FUNCTION
+NUMBEROF_EXPANDEDCAUSALITYFUNCTION
+NUMBEROF_EXPANDEDCOLLECTFUNCTION
+NUMBEROF_EXPANDEDDIRECTFUNCTION
+NUMBEROF_EXPANDEDFIRSTFUNCTION
+NUMBEROF_EXPANDEDMULFUNCTION
+NUMBEROF_EXPANDEDSUMFUNCTION
+NUMBEROF_EXPFUNCTION
+NUMBEROF_EXTERNALINPUT
+NUMBEROF_EXTERNALOUTPUT
+NUMBEROF_EYEFUNCTION
+NUMBEROF_FALSE
+NUMBEROF_FINALSTATEMENT
+NUMBEROF_FINISHTIME
+NUMBEROF_FLOORFUNCTION
+NUMBEROF_FLOWCAUSALITYSTATEMENT
+NUMBEROF_FORSTATEMENT
+NUMBEROF_FREQUENCYEVENTFUNCTION
+NUMBEROF_FROMMATLABSTATEMENT
+NUMBEROF_GAUSSFUNCTION
+NUMBEROF_GREATER
+NUMBEROF_GREATEREQUAL
+NUMBEROF_HOLDFUNCTION
+NUMBEROF_HOMOGENEOUSFUNCTION
+NUMBEROF_IFSTATEMENT
+NUMBEROF_IMPULSEFUNCTION
+NUMBEROF_INITIALFUNCTION
+NUMBEROF_INITIALSTATEMENT
+NUMBEROF_INITIALVALUE
+NUMBEROF_INNERFUNCTION
+NUMBEROF_INTFUNCTION
+NUMBEROF_INVERSEFUNCTION
+NUMBEROF_INVERSEHOMOGENEOUSFUNCTION
+NUMBEROF_JACOBIAN
+NUMBEROF_LESS
+NUMBEROF_LESSEQUAL
+NUMBEROF_LIMINTFUNCTION
+NUMBEROF_LIMITFUNCTION
+NUMBEROF_LINEARSOLVEFUNCTION
+NUMBEROF_LITERAL
+NUMBEROF_LOG10FUNCTION
+NUMBEROF_LOG2FUNCTION
+NUMBEROF_LOGFUNCTION
+NUMBEROF_MAJOR
+NUMBEROF_MAJORADJOINTFUNCTION
+NUMBEROF_MAXFUNCTION
+NUMBEROF_MIN
+NUMBEROF_MINFUNCTION
+NUMBEROF_MODULO
+NUMBEROF_MUL
+NUMBEROF_MULTIPLYHOMOGENEOUSFUNCTION
+NUMBEROF_NEXTFUNCTION
+NUMBEROF_NONLINEARFUNCTION
+NUMBEROF_NORMFUNCTION
+NUMBEROF_NORMINFFUNCTION
+NUMBEROF_NOTEQUAL
+NUMBEROF_OR
+NUMBEROF_PARAMETER
+NUMBEROF_PLUS
+NUMBEROF_PORT
+NUMBEROF_PORTVARIABLE
+NUMBEROF_POWER
+NUMBEROF_PREFIXMIN
+NUMBEROF_PREFIXNOT
+NUMBEROF_PREFIXPLUS
+NUMBEROF_PREVIOUSFUNCTION
+NUMBEROF_RAMPFUNCTION
+NUMBEROF_RANDOM
+NUMBEROF_RANDOMFUNCTION
+NUMBEROF_RATE
+NUMBEROF_REALTIME
+NUMBEROF_REPEATSTATEMENT
+NUMBEROF_RESETFUNCTION
+NUMBEROF_RESINTFUNCTION
+NUMBEROF_RETURNSTATEMENT
+NUMBEROF_ROUNDFUNCTION
+NUMBEROF_ROWSFUNCTION
+NUMBEROF_SAMPLEFUNCTION
+NUMBEROF_SAMPLETIME
+NUMBEROF_SIGNFUNCTION
+NUMBEROF_SINFUNCTION
+NUMBEROF_SINHYPERBOLICFUNCTION
+NUMBEROF_SKEWFUNCTION
+NUMBEROF_SQRFUNCTION
+NUMBEROF_SQRTFUNCTION
+NUMBEROF_STARTTIME
+NUMBEROF_STATE
+NUMBEROF_STATERATE
+NUMBEROF_STEPFUNCTION
+NUMBEROF_STEPSIZE
+NUMBEROF_STOPSTATEMENT
+NUMBEROF_SUMFUNCTION
+NUMBEROF_SWITCHSTATEMENT
+NUMBEROF_SYMMETRICFUNCTION
+NUMBEROF_SYSTEMVARIABLE
+NUMBEROF_TABLEFUNCTION
+NUMBEROF_TANFUNCTION
+NUMBEROF_TANHYPERBOLICFUNCTION
+NUMBEROF_TDELAYFUNCTION
+NUMBEROF_TILDEFUNCTION
+NUMBEROF_TIME
+NUMBEROF_TIMEEVENTFUNCTION
+NUMBEROF_TIMENODEWITHOUT
+NUMBEROF_TIMETRIGGERFUNCTION
+NUMBEROF_TOMATLABSTATEMENT
+NUMBEROF_TRACEFUNCTION
+NUMBEROF_TRANSPOSEFUNCTION
+NUMBEROF_TRIGGERDOWNFUNCTION
+NUMBEROF_TRIGGERFUNCTION
+NUMBEROF_TRIGGERUPFUNCTION
+NUMBEROF_TRUE
+NUMBEROF_TRUNCFUNCTION
+NUMBEROF_TYPEPARAMETER
+NUMBEROF_UNNAMED
+NUMBEROF_VARIABLE
+NUMBEROF_WARNSTATEMENT
+NUMBEROF_WHILESTATEMENT
+NUMBEROF_XOR
+OUTPUT_EQUATIONS
+OUTPUT_NAMES
+OUTPUT_NAMES2
+OUTPUT_NAMES3
+OUTPUT_UNITS
+OUTPUT2_EQUATIONS
+PARAMETER_NAMES
+PARAMETER_NAMES2
+PARAMETER_NAMES3
+PARAMETER_UNITS
+PARAMETER_VALUES
+RATE_NAMES
+RATE_NAMES2
+RATE_NAMES3
+RATE_UNITS
+SIMULINK_MODEL
+SIMULINK_SUBMODEL
+START_TIME
+STATE_NAMES
+STATE_NAMES2
+STATE_NAMES3
+STATE_UNITS
+STATIC_EQUATIONS
+TIME_STEP_SIZE
+USER_NAME
+VARIABLE_NAMES
+VARIABLE_NAMES2
+VARIABLE_NAMES3
+VARIABLE_TO_OUTPUT_EQUATIONS
+VARIABLE_UNITS
+WORK_ARRAY_SIZE
+XX_ALG_IN_ARRAY_NAME
+XX_ALG_OUT_ARRAY_NAME
+XX_DEP_RATE_ARRAY_NAME
+XX_DEP_STATE_ARRAY_NAME
+XX_EXT_IN_ARRAY_NAME
+XX_EXT_OUT_ARRAY_NAME
+XX_FAVORITE_PARS_ARRAY_NAME
+XX_FAVORITE_VARS_ARRAY_NAME
+XX_INITIAL_VALUE_ARRAY_NAME
+VARPREFIX
+FUNCTIONPREFIX
+XX_TIME
+XX_INITIALIZE
+XX_VARIABLE_ARRAY_NAME
+XX_PARAMETER_ARRAY_NAME
+XX_CONSTANT_ARRAY_NAME
+XX_STATE_ARRAY_NAME
+XX_RATE_ARRAY_NAME
+XX_MATRIX_ARRAY_NAME
+XX_UNNAMED_ARRAY_NAME
+FORMAJORVERSION
+FORMINORVERSION
+FORMAJORBUILD
+FORMINORBUILD
+MAJORVERSION
+MINORVERSION
+MAJORBUILD
+MINORBUILD
+SKIP_MODEL_CONFIGURATION
+TEMPLATENAME
+TEMPLATEDIR
+TEMPLATE_DIR
+]]></token>
+</tokens>
+
+
